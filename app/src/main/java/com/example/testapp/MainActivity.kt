@@ -1,8 +1,9 @@
 package com.example.testapp
 
+import android.app.ActivityOptions
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.LinearLayout
 import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.constraintlayout.motion.widget.TransitionAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -10,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.testapp.adapter.CardAdapter
 import com.example.testapp.adapter.HorizontalItemDecoration
 import com.example.testapp.items.CardItem
+import com.example.testapp.ui.MainFieldActivity
 
 class MainActivity : AppCompatActivity() {
 
@@ -29,7 +31,8 @@ class MainActivity : AppCompatActivity() {
             addItemDecoration(HorizontalItemDecoration(this@MainActivity))
         }
 
-        cardAdapter.updateCards(listOf(CardItem("FUCK", "this is test content for this card"),
+        cardAdapter.updateCards(listOf(
+            CardItem("FUCK", "this is test content for this card"),
             CardItem("NEXT CARD", "poprikolu description for the card ne zavezli"),
             CardItem("NOT SUPPORTED", "cooming soon, cooming soon, cooming soon, cooming soon")
         ))
@@ -39,7 +42,11 @@ class MainActivity : AppCompatActivity() {
             override fun onTransitionCompleted(motionLayout: MotionLayout?, currentId: Int) {
                 when (currentId) {
                     R.id.mainEnd -> {
-                        //todo make fragment transaction main_field_fragment.xml
+                        applicationContext.startActivity(
+                            Intent(this@MainActivity, MainFieldActivity::class.java).also {
+                                it.flags = Intent.FLAG_ACTIVITY_NO_ANIMATION
+                            }
+                        )
                     }
                 }
             }
